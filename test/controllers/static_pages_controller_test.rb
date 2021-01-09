@@ -51,4 +51,10 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success 
     assert_select "title", "Lua | #{@baseTitle}"
   end
+  
+  test "should get glsl" do 
+    get static_pages_glsl_url 
+    assert_response :success 
+    assert_select "title", "GLSL | #{@baseTitle}"
+  end
 end

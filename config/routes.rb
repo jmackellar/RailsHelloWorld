@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'static_pages/work'
   get 'static_pages/ruby'
   get 'static_pages/lua'
+  get 'static_pages/glsl'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'static_pages#work'
 end
