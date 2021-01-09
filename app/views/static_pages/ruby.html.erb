@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <% provide(:title, "Ruby") %>
 
+<div class="sidenav">
+  <a href="<%= static_pages_work_url %>">About</a>
+  <a class="active" href="<%= static_pages_ruby_url %>">Ruby</a>
+  <a href="<%= static_pages_lua_url %>">Lua</a>
+  <a href="<%= static_pages_glsl_url %>">GLSL</a>
+  <a href="<%= static_pages_contact_url %>">Contact</a>
+</div>
+
 <div class="main">
   <h3>Ruby + Rails</h3>
 </div>
@@ -15,14 +23,193 @@
   <a href="https://www.github.com/jmackellar/RubyBSP">Github</a></br>
   <a href="https://raw.githubusercontent.com/jmackellar/RubyBSP/main/output1.txt">Example 1</a>
   <a href="https://raw.githubusercontent.com/jmackellar/RubyBSP/main/output2.txt">Example 2</a>
-  <a href="https://raw.githubusercontent.com/jmackellar/RubyBSP/main/output3.txt">Example 3</a></br>
+  <a href="https://raw.githubusercontent.com/jmackellar/RubyBSP/main/output3.txt">Example 3</a></br></br>
   <a>This algorothim uses a BSP Tree to seperate a flat plane into rooms connected through their relationship on the tree.
   The contents of the generated planes are saved to a file in the working folder.  
-  Size of the plane and N subdivisions to make on the tree are configurable.</a>
+  Size of the plane and N subdivisions to make on the tree are configurable.</a></br></br>
+  <pre class="prettyprint">
+    # Tree Class
+    # Holds Data for the base area size and root node
+    # of the generated BSP Trees.  The leaves of the 
+    # tree are assumed to be balanced, every child should
+    # have a paired sibling.
+    class Tree 
+    	def initialize(args)
+    		@areaWidth, @areaHeight, @divisionsToMake = *args
+    		@rootNode = Node.new([0, 0, @areaWidth, 
+    		            @areaHeight, @divisionsToMake, 1])
+    	end
+  
+    	...
+    	
+    end
+  </pre>
+  <pre class="prettyprint">
+    # Node Class
+    # Holds data for a subdivided area, individiual rooms, and
+    # their connections in a BSP Tree
+    class Node
+    	def initialize(args)
+    		@areaX, @areaY, @areaWidth, @areaHeight, @divisionsToMake, 
+    		        @currentDivision, @parentNode = *args 
+    		@roomConnectors = [ ]
+    		# Subdivide nodes until we reach max divisions then 
+    		# place rooms in the bottom nodes
+    		if @currentDivision < @divisionsToMake
+    			self.divideNode()
+    		else 
+    			self.createRoom()
+    		end
+    	end
+    	
+    	# Divides the current node in half, either vertically 
+    	# or horizontally.
+    	def divideNode()
+    		# Choose a position along the perimeter to 
+    		# divide the node area by
+    		@chosenDivision = @areaWidth > @areaHeight ? 0 : 1
+    		divisionTypes = [
+    			rand(@areaX + (@areaWidth * 0.35).floor ..
+    			  @areaX + @areaWidth - 
+    			  (@areaWidth * 0.35).ceil), 
+    			rand(@areaY + (@areaHeight * 0.35).floor .. 
+    			  @areaY + @areaHeight - 
+    			  (@areaHeight * 0.35).ceil),
+    		]
+    		possibleDivisions = [ 
+    			# Divide the area vertically
+    			[
+    				# First child node
+    				@areaX,
+    				@areaY,
+    				@areaX + @areaWidth - 
+    				  divisionTypes[@chosenDivision],
+    				@areaHeight,
+    				# Second child node 
+    				divisionTypes[@chosenDivision],
+    				@areaY,
+    				@areaX + @areaWidth - 
+    				  divisionTypes[@chosenDivision],
+    				@areaHeight,
+    				],
+    			# Divide the area horizontally
+    			[
+    				# First child Node
+    				@areaX,
+    				@areaY,
+    				@areaWidth,
+    				@areaY + @areaHeight - 
+    				  divisionTypes[@chosenDivision],
+    				# Second child node
+    				@areaX,
+    				divisionTypes[@chosenDivision],
+    				@areaWidth,
+    				@areaY + @areaHeight - 
+    				  divisionTypes[@chosenDivision],
+    				]
+    		]
+    		@areaDivision = possibleDivisions[@chosenDivision]
+    		# Create the child nodes and assign each other
+    		# a refernce to their sibling
+    		@children = [ 
+    			Node.new([
+    				@areaDivision[0], 
+    				@areaDivision[1], 
+    				@areaDivision[2], 
+    				@areaDivision[3], 
+    				@divisionsToMake, 
+    				@currentDivision + 1, 
+    				self
+    				]),
+    			Node.new([
+    				@areaDivision[4], 
+    				@areaDivision[5], 
+    				@areaDivision[6], 
+    				@areaDivision[7], 
+    				@divisionsToMake, 
+    				@currentDivision + 1, 
+    				self
+    				]),
+    			]
+    		@children[0].assignSiblingNode(@children[1])
+    		@children[1].assignSiblingNode(@children[0])
+    		# Create connections between sibling, 
+    		# parent, and child nodes
+    		self.createConnectorBetweenChildren()
+    		if @parentNode 
+    			@parentNode.createConnectorToChild(
+    			  @roomConnectors[0][0], 
+    			  @roomConnectors[0][1])
+    		else
+    			x1, y1 = @children[0].getConnectorStart()
+    			x2, y2 = @children[0].getConnectorStart()
+    			self.createRootConnector(x1, y1, x2, y2)
+    		end
+    	end
+    	
+    	...
+    	
+    end
+  </pre>
   <h3>Asynchronous Event Bus</h3>
   <a>2021</a>
   <a href="https://www.github.com/jmackellar/RubyEventBus">Github</a></br>
-  <a href="https://github.com/jmackellar/RubyEventBus/blob/main/output.txt">Example</a></br>
+  <a href="https://github.com/jmackellar/RubyEventBus/blob/main/output.txt">Example</a></br></br>
   <a>A simple event bus that allows entities to communicated asynchronously by publishing and subscribing to various user defined channels.
-  The application comes with an example usage of a catalog and shopping cart communicating prices between each other.</a>
+  The application comes with an example usage of a catalog and shopping cart communicating prices between each other.</a></br></br>
+  <pre class ="prettyprint">
+    # Class EventBus
+    # Handles messaging between entities by opening channels
+    # that entites may subscribe to or publish events through.
+    class EventBus
+    	def initialize(args)
+    		@subscriptions = { }
+    	end
+    
+    	# Publish an event to all entites that are subscribed.
+    	# Subscribed entites are assumed to have a function listen
+    	# that will have data sent through
+    	def publish(eventName, sender, eventArgs)
+    		if @subscriptions[eventName] 
+    			@subscriptions[eventName].each do |k, v|
+    				if k 
+    					puts '[eventBus]Publishing event '
+    						+ eventName + ' to entity ' 
+    						+ k.getName() + 
+    						' sent from ' + sender
+    					k.listen(eventName, sender, 
+    						eventArgs)
+    				end
+    			end
+    		end
+    	end
+    
+    	# Subscribes an entity to channel eventName.  If the channel
+    	# doesn't exist then create it
+    	def subscribe(entity, eventName)
+    		if not @subscriptions[eventName] 
+    			@subscriptions[eventName] = [ ] 
+    		end
+    		puts "[eventBus]Subscribing " + entity.getName() + 
+    			" to channel " + eventName
+    		@subscriptions[eventName].push(entity)
+    	end
+    
+    	# Unsubscribes an entity from a chennel
+    	def unsubscribe(entity, eventName)
+    		if @subscriptions[eventName] 
+    			for i in 0..@subscriptions[eventName].length()-1
+    				if entity == @subscriptions[eventName][i]
+    					puts "[eventBus]Unsubscribing " + 
+    						entity.getName() + 
+    						" from channel " 
+    						+ eventName
+    					@subscriptions[eventName][i] = nil 
+    					break 
+    				end
+    			end
+    		end
+    	end
+    end
+  </pre>
 </div>
