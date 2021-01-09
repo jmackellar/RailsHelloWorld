@@ -27,8 +27,16 @@
   }
   
   .main {
-    margin-left: 140px; /* Same width as the sidebar + left position in px */
-    font-size: 28px; /* Increased text to enable scrolling */
+    margin-left: 140px; 
+    margin-top: -90px;
+    font-size: 28px; 
+    padding: 0px 10px;
+  }
+  
+  .mainbody {
+    margin-left: 140px;
+    margin-right: 700px;
+    font-size: 20px;
     padding: 0px 10px;
   }
   
@@ -40,11 +48,19 @@
 
 
 <div class="sidenav">
-  <a href="#about">About</a>
-  <a href="#services">Ruby</a>
-  <a href="#clients">Lua</a>
+  <a href="<%= static_pages_work_url %>">About</a>
+  <a href="<%= static_pages_ruby_url %>">Ruby</a>
+  <a href="<%= static_pages_lua_url %>">Lua</a>
 </div>
 
 <div class="main">
-  
+  <h3>About</h3>
+</div>
+
+<div class="mainbody">
+  <h3>General Experience</h3>
+  <a>Jesse MacKellar is a self taught programmer with over a decade of personal and hobbyist experience.  
+  I began learning 12 years ago starting with BASIC and c++, and soon after began working with Lua and Ruby.
+  My knowledge is a result of programming games as a hobby, in designing the software's architecture and systems.
+  This website is a collection of some of my recent work.</a>
 </div>

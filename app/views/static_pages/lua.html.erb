@@ -1,14 +1,7 @@
 <!DOCTYPE html>
-<% provide(:title, "Contact") %>
+<% provide(:title, "Lua") %>
 
 <style>
-  .main {
-    margin-top: -90px;
-    margin-left: 140px; 
-    font-size: 22px;
-    padding: 0px 10px;
-  }
-  
   .sidenav {
     width: 130px;
     position: fixed;
@@ -35,6 +28,7 @@
   
   .main {
     margin-left: 140px; 
+    margin-top: -90px;
     font-size: 28px; 
     padding: 0px 10px;
   }
@@ -51,15 +45,25 @@
   }
 </style>
 
-<div class="sidenav">
 
+<div class="sidenav">
+  <a href="<%= static_pages_work_url %>">About</a>
+  <a href="<%= static_pages_ruby_url %>">Ruby</a>
+  <a href="<%= static_pages_lua_url %>">Lua</a>
 </div>
 
 <div class="main">
-  <h3>Jesse MacKellar</h3>
+  <h3>Lua</h3>
 </div>
 
 <div class="mainbody">
-  <p><a href="mailto:jessemackellar@gmail.com">jessemackellar@gmail.com</a></p>
-  <p>734 945 5320</p>
+  <h3>Rogue</h3>
+  <a>2020</a>
+  <a href="https://www.github.com/jmackellar/RogueGame">Github</a>
+  <h3>Heat Death</h3>
+  <a>2019-2020</a>
+  <a href="https://www.github.com/jmackellar/HeatDeath">Github</a>
+  <h3>Immorlands</h3>
+  <a>2018</a>
+  <a href="https://www.github.com/jmackellar/Immorlands">Github</a>
 </div>
