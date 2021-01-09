@@ -19,9 +19,74 @@
   <a href="https://www.github.com/jmackellar/ShaderCollection">Github</a></br></br>
   <a>Dynamic Light System</a></br>
   <a>A GLSL shader used for rendering a dynamic light scene with blending.  The shader is passed the light source data that has been
-  packed into an Nx2 png image.  The top row of pixel's rgb channels correspond to the light sources x position, y position, and light intensity.
-  The second row of pixel's rgb channels correspond to the color of the light source.</a></br></br>
+  packed into an Nx2 png image.  The top row of pixels rgb channels correspond to the light sources x position, y position, and light intensity.
+  The second row of pixels rgb channels correspond to the color of the light source.</a></br></br>
+  <pre class="prettyprint">
+    local light = love.graphics.newShader[[
+      // Packed light data map
+    	extern Image map;
+      // Number of lights
+    	extern number w;
+      // Users screen info
+    	extern number screenwidth;
+    	extern number screenheight;
+      // Global light power
+    	extern number lightpow;
+    	//Effect
+    	vec4 effect( vec4 color, Image texture, 
+                    vec2 texture_coords, 
+                    vec2 screen_coords ){
+          //This is the current pixel color
+       	vec4 pixel = Texel(texture, texture_coords );
+       	vec4 mp = Texel(map, vec2(1 * 0.005, 0));
+       	vec4 mc = Texel(map, vec2(1 * 0.005, 1));
+       	vec4 colorr = vec4(0,0,0,0);
+       	vec2 info = vec2(0, (pixel.r + pixel.g + pixel.b) * 0.33);
+          // Apply lights to current pixel
+       	for (number i = 0; i < w; i++){
+       		mp = Texel(map, vec2(i * 0.005, 0));
+       		mc = Texel(map, vec2(i * 0.005, 1));
+       		info.x = (mp.b * ((mp.b * 510) + 1)) * 
+                pow(sqrt(pow(((mp.r * screenwidth) - 300) - 
+                screen_coords.x, 2) + pow(((mp.g * 
+                screenheight) - 300) - screen_coords.y, 2)
+                ) / lightpow, 2);
+       		colorr.x = max(-min(max(info.x * info.y, mc.r), 
+                pixel.r * 0.99) + pixel.r, colorr.x * 1);
+       		colorr.y = max(-min(max(info.x * info.y, mc.g), 
+                pixel.g * 0.99) + pixel.g, colorr.y * 1);
+       		colorr.z = max(-min(max(info.x * info.y, mc.b), 
+                pixel.b * 1.1) + pixel.b, colorr.z * 1);
+       	}
+       // Modify and return the pixels color
+       pixel.rgb = colorr.xyz;
+          return pixel;
+     	}
+    ]]
+  </pre>
   <a>Kaleidoscope Effect</a></br>
   <a>This shader takes passed x value which is function of cos or sin to rapidly shift the color shaded image giving it
-  a kaleidoscope effect.</a>
+  a kaleidoscope effect.</a></br></br>
+  <pre class="prettyprint">
+    local holographic = love.graphics.newShader[[
+    	extern number x;
+    	vec4 effect( vec4 color, Image texture, 
+    				vec2 texture_coords, 
+    				vec2 screen_coords ){
+    		vec4 pixel = Texel(texture, texture_coords);
+    		if (pixel.r == 1 && pixel.g == 1 && pixel.b == 1){
+    			pixel.r = min(0.75, max(0.35, 
+    				sin(x + texture_coords.y) + 1.2 - 
+    				(texture_coords.y - 0.1)));
+    			pixel.g = min(0.45, max(0.15, 
+    				cos(x + texture_coords.y) + 1.2 - 
+    				(texture_coords.y - 0.5)));
+    			pixel.b = min(1, max(0.35, 
+    				sin(x + texture_coords.y) + 1.2 - 
+    				(texture_coords.y - 0.75)));
+    		}
+    		return pixel;
+    	}
+    ]]
+  </pre>
 </div>
