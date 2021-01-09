@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<% provide(:title, "Lua") %>
+
+<style>
+  .sidenav {
+    width: 130px;
+    position: fixed;
+    z-index: 1;
+    top: 150px;
+    left: 10px;
+    background: #333;
+    overflow-x: hidden;
+    padding: 8px 0;
+  }
+  
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f2f2f2;
+    display: block;
+  }
+  
+  .sidenav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .main {
+    margin-left: 140px; 
+    margin-top: -90px;
+    font-size: 28px; 
+    padding: 0px 10px;
+  }
+  
+  .mainbody {
+    margin-left: 140px;
+    margin-right: 700px;
+    font-size: 20px;
+    padding: 0px 10px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+</style>
+
+
+<div class="sidenav">
+  <a href="<%= static_pages_work_url %>">About</a>
+  <a href="<%= static_pages_ruby_url %>">Ruby</a>
+  <a href="<%= static_pages_lua_url %>">Lua</a>
+  <a href="<%= static_pages_glsl_url %>">GLSL</a>
+</div>
+
+<div class="main">
+  <h3>Lua</h3>
+</div>
+
+<div class="mainbody">
+  <h3>Rogue</h3>
+  <a>2020</a>
+  <a href="https://www.github.com/jmackellar/RogueGame">Github</a></br>
+  <a>A turn based RPG that features an infinitely generated world, open world faction system, and emergent gameplay.
+  The game world is generated into chunks of biomes through perlin noise, with the individual world tiles using a combination
+  of BSP generation and walker algorothims.  A generalized AI system combined with the faction system allows for creatures
+  to pick and choose their targets between the player and NPCs allowing for a world that feels open and alive.</a>
+  <h3>Heat Death</h3>
+  <a>2019-2020</a>
+  <a href="https://www.github.com/jmackellar/HeatDeath">Github</a></br>
+  <a>An action game set in space.  The player object and enemy objects are identical, meaning the enemies may use any attack, item,
+  or spell that the player may and use, and vice versa.  The creature objects are controlled through a state and animation system 
+  where each part of the body is tracked seperately and moved accordingly to allow for different states to be combined with different
+  game items.</a>
+  <h3>Immorlands</h3>
+  <a>2018</a>
+  <a href="https://www.github.com/jmackellar/Immorlands">Github</a></br>
+  <a>An action RPG about exploring a dungeon underneath a cave.  The object state system, UI framework, and dynamic lighting effects 
+  used in Heat Death were originally written for this project before being updated and improved upon.</a>
+</div>
