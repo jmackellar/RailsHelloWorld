@@ -1,61 +1,6 @@
 <!DOCTYPE html>
 <% provide(:title, "Work") %>
 
-<style>
-  .sidenav {
-    width: 130px;
-    height: 100vw;
-    position: fixed;
-    z-index: 1;
-    top: 150px;
-    left: 10px;
-    background: #333;
-    overflow-x: hidden;
-    padding: 8px 0;
-  }
-  
-  .sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #f2f2f2;
-    display: block;
-  }
-  
-  .sidenav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  .main {
-    margin-left: 140px; 
-    margin-top: 80px;
-    font-size: 28px; 
-    padding: 0px 10px;
-  }
-  
-  .mainbody {
-    margin-left: 140px;
-    margin-top: 45px;
-    max-width: 1000px;
-    font-size: 20px;
-    padding: 0px 10px;
-  }
-  
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
-</style>
-
-
-<div class="sidenav">
-  <a href="<%= static_pages_work_url %>">About</a>
-  <a href="<%= static_pages_ruby_url %>">Ruby</a>
-  <a href="<%= static_pages_lua_url %>">Lua</a>
-  <a href="<%= static_pages_glsl_url %>">GLSL</a>
-</div>
-
 <div class="main">
   <h3>About</h3>
 </div>
