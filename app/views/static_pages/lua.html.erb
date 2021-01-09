@@ -14,6 +14,109 @@
 </div>
 
 <div class="mainbody">
+  <h3>ScarletLib</h3>
+  <a>2018-2019</a>
+  <a href="https://github.com/jmackellar/ScarletLib">Github</a></br></br>
+  <a>A gameState and UI library written for LÖVE 0.10.x.  gameStates are loaded as seperate Lua files and hook into the
+  existing LÖVE callbacks allowing for greater project organization.  The UI library has support for frames, images, 
+  buttons, progress bars, text input and more.  UI elements can be created, modified, or deleted individualy or through
+  groups, along with support for batched updating and deletion.  The library runs stable with upwards of 1000 elements
+  updated and rendered to the screen per frame.</a></br></br>
+  <a>gameState Usage</a>
+  <pre class="prettyprint">
+    --- main.lua
+    --- Example stateGame usage 
+    
+    require 'menu'  --- seperate state game file
+    require 'game'  --- seperate state game file 
+    
+    function love.load()
+      --- Register our two game state files
+      ScarletLib.gamestate.registerGameState('menu')
+      ScarletLib.gamestate.registerGameState('game')
+      --- Switch to a new game state.  The first time a 
+      --- state is switched to state.load callback is 
+      --- executed if state.load exists.  
+      --- state.enter is also executed if the callback 
+      --- exists in the state file.
+      ScarletLib.gamestate.switchGameState('menu')
+    end
+    
+    --- Example of user defined callback to a 
+    --- gameState file
+    function love.update(dt)
+    	if ScarletLib.gamestate.getGameState().update then
+    		ScarletLib.gamestate.getGameState().update(dt)
+    	end
+    end
+  </pre>
+  <pre class="prettyprint">
+    --- menu.lua 
+    --- Example stateGame usage 
+    local menu = { } 
+    
+    --- Called the first time the gameState has 
+    --- been entered 
+    function menu.load()
+    
+    end 
+    
+    --- Called every time the gameState is switched to
+    function menu.enter()
+    
+    end 
+    
+    --- User defined callback 
+    function menu.update(dt)
+    
+    end 
+    
+    --- Return the local state to the state machine
+    return menu
+  </pre>
+  <a>UI Usage</a>
+  <pre class="prettyprint">
+    --- UI Library example 
+    
+    --- Adding a frame 
+    scarletLib.layout.addFrame({
+      name = 'frame1',
+      group = 'uigroup',
+      x = 0,
+      y = 0,
+      width = 500,
+      height = 500,
+      z = 0,
+      style = 1,
+  	})
+  	
+    --- Adding a button 
+    scarletLib.layout.addButton({
+    	name = 'button1',
+    	group = 'uigroup',
+    	x = 15,
+    	y = 15,
+    	z = 1,
+    	sx = 3,
+    	sy = 3,
+    	img = love.graphics.newImage("/path/to/image"),
+    	hilightable = false,
+    	hilighttext = 'Press Me!',
+    	hilightfont = 'font1',
+    	buttonpressed = function (self)
+    	                  --- Some action
+    	                end
+    })
+    
+    --- Change frame1s width by 100 pixels 
+    scarletLib.layout.changeElement('frame1', 'width', 100, true) 
+    --- Set the x position of both elements to 100 
+    scarletLib.layout.changeElementGroup('uigroup', 'x', 100, false)
+    --- Flag group to be deleted and then process the 
+    --- batch deletion
+    scarletLib.layout.deleteByGroup('uigroup')
+    scarletLib.layout.deleteFlaggedGroups()
+  </pre>
   <h3>Rogue</h3>
   <a>2020</a>
   <a href="https://www.github.com/jmackellar/RogueGame">Github</a></br>
