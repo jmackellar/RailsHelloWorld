@@ -40,6 +40,17 @@
     padding: 0px 10px;
   }
   
+  .home_video {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+    top: 0;
+    z-index: -2;
+  }
+  
   @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
@@ -55,13 +66,15 @@
 </div>
 
 <div class="main">
-  <h3>Lua</h3>
+  <h3>Lua + LÖVE</h3>
 </div>
 
 <div class="mainbody">
   <h3>Rogue</h3>
   <a>2020</a>
   <a href="https://www.github.com/jmackellar/RogueGame">Github</a></br>
+  <a href="https://www.youtube.com/watch?v=b14OiCfK9Nc">Video 1</a>
+  <a href="https://www.youtube.com/watch?v=wVKR3ss5EGM&feature=youtu.be">Video 2</a></br>
   <a>A turn based RPG that features an infinitely generated world, open world faction system, and emergent gameplay.
   The game world is generated into chunks of biomes through perlin noise, with the individual world tiles using a combination
   of BSP generation and walker algorothims.  A generalized AI system combined with the faction system allows for creatures
